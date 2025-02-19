@@ -1,30 +1,55 @@
 import React, { useState } from "react";
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 import "./App.css";
 
+type TUserInfo = {
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  Password: string;
+};
+type TErrorInfo = {
+  FirstName: boolean;
+  LastName: boolean;
+  Email: boolean;
+  Password: boolean;
+};
+
 function App() {
-  const [userInfo, setUserInfo] = useState({
+  const [userInfo, setUserInfo] = useState<TUserInfo>({
     FirstName: "",
     LastName: "",
     Email: "",
     Password: "",
   });
-  const handleSubmission=(event:React.FormEvent<HTMLFormElement>)=>{
-    event.preventDefault();
+  console.log(userInfo);
 
-    setUserInfo(userInfo)
-    console.log(userInfo)
-  }
-  const [erros,setErros]=useState()
+  const handleSubmission = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setErrors({
+      ...errors,
+      FirstName: !userInfo.FirstName,
+      LastName: !userInfo.LastName,
+      Email: !emailRegex.test(userInfo.Email),
+      Password: !userInfo.Password,
+    });
+    return;
+    setUserInfo({ FirstName: "", LastName: "", Email: "", Password: "" });
+  };
+  const [errors, setErrors] = useState<TErrorInfo>({
+    FirstName: false,
+    LastName: false,
+    Email: false,
+    Password: false,
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setUserInfo({ ...userInfo, [event.target.name]: event.target.value });
 
   return (
     <>
-      <form
-       onSubmit={handleSubmission} 
-      >
+      <form onSubmit={handleSubmission}>
         <input
           onChange={handleChange}
           value={userInfo.FirstName}
@@ -32,6 +57,7 @@ function App() {
           name="FirstName"
           type="text"
         />
+        {errors.FirstName && <span>First Name cannot be empty</span>}
         <input
           onChange={handleChange}
           value={userInfo.LastName}
@@ -39,6 +65,7 @@ function App() {
           name="LastName"
           type="text"
         />
+        {errors.LastName && <span>Last Name cannot be empty</span>}
         <input
           onChange={handleChange}
           value={userInfo.Email}
@@ -46,6 +73,7 @@ function App() {
           name="Email"
           type="text"
         />
+        {errors.Email && <span>Looks like this is not an email</span>}
         <input
           onChange={handleChange}
           value={userInfo.Password}
@@ -53,6 +81,7 @@ function App() {
           name="Password"
           type="password"
         />
+        {errors.Password && <span>Password cannot be empty</span>}
         <button>Submit</button>
       </form>
     </>
