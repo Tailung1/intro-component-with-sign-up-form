@@ -11,6 +11,12 @@ type TUserInfo = {
   Password: string;
 };
 type TErrorInfo = {
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  Password: string;
+};
+type TChecker = {
   FirstName: boolean;
   LastName: boolean;
   Email: boolean;
@@ -26,25 +32,70 @@ function App() {
   });
   console.log(userInfo);
 
-  const handleSubmission = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const newErrors = {
-      FirstName: !userInfo.FirstName,
-      LastName: !userInfo.LastName,
-      Email: !emailRegex.test(userInfo.Email),
-      Password: !userInfo.Password,
-    };
-    setErrors(newErrors);
-    if (!Object.values(newErrors).includes(true)) {
-      setUserInfo({ FirstName: "", LastName: "", Email: "", Password: "" });
-    }
-  };
   const [errors, setErrors] = useState<TErrorInfo>({
+    FirstName: "",
+    LastName: "",
+    Email: "",
+    Password: "",
+  });
+  const [checker, setChecker] = useState<TChecker>({
     FirstName: false,
     LastName: false,
     Email: false,
     Password: false,
   });
+
+  const handleSubmission = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!userInfo.FirstName) {
+      setErrors((prev) => ({ ...prev, FirstName: "Input can not be empty" }));
+    } else if (userInfo.FirstName.length < 5) {
+      setErrors((prev) => ({
+        ...prev,
+        FirstName: "Input must contain at least 5 characters",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, FirstName: "" }));
+      setChecker((prev) => ({ ...prev, FirstName: true }));
+    }
+
+    if (!userInfo.LastName) {
+      setErrors((prev) => ({ ...prev, LastName: "Input can not be empty" }));
+    } else if (userInfo.LastName.length < 5) {
+      setErrors((prev) => ({
+        ...prev,
+        LastName: "Input must contain at least 5 characters",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, LastName: "" }));
+      setChecker((prev) => ({ ...prev, LastName: true }));
+    }
+
+    if (!userInfo.Email) {
+      setErrors((prev) => ({ ...prev, Email: "Input can not be empty" }));
+    } else if (userInfo.Email.length < 5) {
+      setErrors((prev) => ({
+        ...prev,
+        Email: "Email must contain at least 5 characters",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, Email: "" }));
+      setChecker((prev) => ({ ...prev, Email: true }));
+    }
+
+    if (!userInfo.Password) {
+      setErrors((prev) => ({ ...prev, Password: "Password can not be empty" }));
+    } else if (userInfo.Password.length < 5) {
+      setErrors((prev) => ({
+        ...prev,
+        Password: "Password must contain at least 5 characters",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, Password: "" }));
+      setChecker((prev) => ({ ...prev, Password: true }));
+    }
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setUserInfo({ ...userInfo, [event.target.name]: event.target.value });
@@ -63,7 +114,7 @@ function App() {
           name="FirstName"
           type="text"
         />
-        {errors.FirstName && <span>First Name cannot be empty</span>}
+        {errors.FirstName && <span>{errors.FirstName}</span>}
         <input
           className="w-[460px]"
           onChange={handleChange}
@@ -72,7 +123,7 @@ function App() {
           name="LastName"
           type="text"
         />
-        {errors.LastName && <span>Last Name cannot be empty</span>}
+        {errors.LastName && <span>{errors.LastName}</span>}
         <input
           className="w-[460px]"
           onChange={handleChange}
@@ -83,7 +134,7 @@ function App() {
         />
         {errors.Email && (
           <>
-            <span>Looks like this is not an email</span>
+            <span>{errors.Email}</span>
           </>
         )}
         <div className="flex items-center relative ">
@@ -106,7 +157,7 @@ function App() {
           />
         </div>
         {errors.Password && (
-          <span className="text-red-600">Password cannot be empty</span>
+          <span className="text-red-600">{errors.Password}</span>
         )}
         <button
           className="w-[460px] bg-[#38CC8B] rounded-[5px] p-y-[15px] p-x-[136px]"
