@@ -51,8 +51,12 @@ function App() {
 
   return (
     <>
-      <form className="flex flex-col gap-[10px] " onSubmit={handleSubmission}>
+      <form
+        className=" flex flex-col items-center gap-[10px] p-[40px] w-[540px] h-[474px] rounded-[10px] bg-[#fff] "
+        onSubmit={handleSubmission}
+      >
         <input
+          className="w-[460px]"
           onChange={handleChange}
           value={userInfo.FirstName}
           placeholder="First Name"
@@ -61,6 +65,7 @@ function App() {
         />
         {errors.FirstName && <span>First Name cannot be empty</span>}
         <input
+          className="w-[460px]"
           onChange={handleChange}
           value={userInfo.LastName}
           placeholder="Last Name"
@@ -69,6 +74,7 @@ function App() {
         />
         {errors.LastName && <span>Last Name cannot be empty</span>}
         <input
+          className="w-[460px]"
           onChange={handleChange}
           value={userInfo.Email}
           placeholder="Email Address"
@@ -80,8 +86,11 @@ function App() {
             <span>Looks like this is not an email</span>
           </>
         )}
-        <div className="flex items-center space-x-5 border-[1px]">
+        <div className="flex items-center relative ">
           <input
+            className={`w-[460px] border border-[#DEDEDE] rounded-[5px] focus:outline-none ${
+              errors.Password ? "border-red-500" : ""
+            }`}
             onChange={handleChange}
             value={userInfo.Password}
             placeholder="Password"
@@ -89,7 +98,9 @@ function App() {
             type="password"
           />
           <img
-            className={`w-6 h-6 ${errors.Password ? "block" : "hidden"}`}
+            className={`w-6 h-6  absolute right-[-30px] ${
+              errors.Password ? "block" : "hidden"
+            }`}
             src="/images/icon-error.svg"
             alt="error image"
           />
@@ -97,7 +108,12 @@ function App() {
         {errors.Password && (
           <span className="text-red-600">Password cannot be empty</span>
         )}
-        <button>Submit</button>
+        <button
+          className="w-[460px] bg-[#38CC8B] rounded-[5px] p-y-[15px] p-x-[136px]"
+          type="submit"
+        >
+          Submit
+        </button>
       </form>
     </>
   );

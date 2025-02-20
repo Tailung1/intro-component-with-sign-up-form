@@ -1,5 +1,6 @@
 input {
   padding: 10px;
+  border: 1px solid blue;
 }
 button {
   margin-top: 10px;
@@ -9,6 +10,5 @@ form {
   display: flex;
   flex-direction: column;
   width: 200px
-;
 }
 
