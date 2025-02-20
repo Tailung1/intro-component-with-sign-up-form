@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
+
 import "./App.css";
 
 type TUserInfo = {
@@ -74,7 +75,16 @@ function App() {
           name="Email"
           type="text"
         />
-        {errors.Email && <span>Looks like this is not an email</span>}
+        {errors.Email && (
+          <>
+            <span>Looks like this is not an email</span>
+            <img
+             
+              src="/images/icon-error.svg"
+              alt="error image"
+            />
+          </>
+        )}
         <input
           onChange={handleChange}
           value={userInfo.Password}
