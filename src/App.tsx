@@ -60,6 +60,7 @@ function App() {
       setChecker((prev) => ({ ...prev, FirstName: true }));
     }
 
+    
     if (!userInfo.LastName) {
       setErrors((prev) => ({ ...prev, LastName: "Input can not be empty" }));
     } else if (userInfo.LastName.length < 5) {
@@ -72,6 +73,7 @@ function App() {
       setChecker((prev) => ({ ...prev, LastName: true }));
     }
 
+
     if (!userInfo.Email) {
       setErrors((prev) => ({ ...prev, Email: "Input can not be empty" }));
     } else if (userInfo.Email.length < 5) {
@@ -83,6 +85,7 @@ function App() {
       setErrors((prev) => ({ ...prev, Email: "" }));
       setChecker((prev) => ({ ...prev, Email: true }));
     }
+
 
     if (!userInfo.Password) {
       setErrors((prev) => ({ ...prev, Password: "Password can not be empty" }));
