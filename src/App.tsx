@@ -38,65 +38,66 @@ function App() {
     Email: "",
     Password: "",
   });
-  const [checker, setChecker] = useState<TChecker>({
-    FirstName: false,
-    LastName: false,
-    Email: false,
-    Password: false,
-  });
 
   const handleSubmission = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    let isValid = true; // Local variable to track validation status
+
     if (!userInfo.FirstName) {
       setErrors((prev) => ({ ...prev, FirstName: "Input can not be empty" }));
+      isValid = false;
     } else if (userInfo.FirstName.length < 5) {
       setErrors((prev) => ({
         ...prev,
         FirstName: "Input must contain at least 5 characters",
       }));
+      isValid = false;
     } else {
       setErrors((prev) => ({ ...prev, FirstName: "" }));
-      setChecker((prev) => ({ ...prev, FirstName: true }));
     }
 
-    
     if (!userInfo.LastName) {
       setErrors((prev) => ({ ...prev, LastName: "Input can not be empty" }));
+      isValid = false;
     } else if (userInfo.LastName.length < 5) {
       setErrors((prev) => ({
         ...prev,
         LastName: "Input must contain at least 5 characters",
       }));
+      isValid = false;
     } else {
       setErrors((prev) => ({ ...prev, LastName: "" }));
-      setChecker((prev) => ({ ...prev, LastName: true }));
     }
-
 
     if (!userInfo.Email) {
-      setErrors((prev) => ({ ...prev, Email: "Input can not be empty" }));
-    } else if (userInfo.Email.length < 5) {
+      setErrors((prev) => ({ ...prev, Email: "Emial nput can not be empty" }));
+      isValid = false;
+    } else if (!emailRegex.test(userInfo.Email)) {
       setErrors((prev) => ({
         ...prev,
-        Email: "Email must contain at least 5 characters",
+        Email: "Email is unvalid",
       }));
+      isValid = false;
     } else {
       setErrors((prev) => ({ ...prev, Email: "" }));
-      setChecker((prev) => ({ ...prev, Email: true }));
     }
-
 
     if (!userInfo.Password) {
       setErrors((prev) => ({ ...prev, Password: "Password can not be empty" }));
+      isValid = false;
     } else if (userInfo.Password.length < 5) {
       setErrors((prev) => ({
         ...prev,
         Password: "Password must contain at least 5 characters",
       }));
+      isValid = false;
     } else {
       setErrors((prev) => ({ ...prev, Password: "" }));
-      setChecker((prev) => ({ ...prev, Password: true }));
+    }
+
+    if (isValid) {
+      setUserInfo({ FirstName: "", LastName: "", Email: "", Password: "" });
     }
   };
 
