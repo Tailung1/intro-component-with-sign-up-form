@@ -27,15 +27,16 @@ function App() {
 
   const handleSubmission = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setErrors({
-      ...errors,
+    const newErrors = {
       FirstName: !userInfo.FirstName,
       LastName: !userInfo.LastName,
       Email: !emailRegex.test(userInfo.Email),
       Password: !userInfo.Password,
-    });
-    return;
-    setUserInfo({ FirstName: "", LastName: "", Email: "", Password: "" });
+    };
+    setErrors(newErrors)
+    if (!Object.values(newErrors).includes(true)) {
+      setUserInfo({ FirstName: "", LastName: "", Email: "", Password: "" });
+    }
   };
   const [errors, setErrors] = useState<TErrorInfo>({
     FirstName: false,
