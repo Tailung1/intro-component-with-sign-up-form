@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-
+import "./index.css";
 import "./App.css";
 
 type TUserInfo = {
@@ -34,7 +34,7 @@ function App() {
       Email: !emailRegex.test(userInfo.Email),
       Password: !userInfo.Password,
     };
-    setErrors(newErrors)
+    setErrors(newErrors);
     if (!Object.values(newErrors).includes(true)) {
       setUserInfo({ FirstName: "", LastName: "", Email: "", Password: "" });
     }
@@ -51,7 +51,7 @@ function App() {
 
   return (
     <>
-      <form onSubmit={handleSubmission}>
+      <form className="flex flex-col gap-[10px] " onSubmit={handleSubmission}>
         <input
           onChange={handleChange}
           value={userInfo.FirstName}
@@ -78,21 +78,25 @@ function App() {
         {errors.Email && (
           <>
             <span>Looks like this is not an email</span>
-            <img
-             
-              src="/images/icon-error.svg"
-              alt="error image"
-            />
           </>
         )}
-        <input
-          onChange={handleChange}
-          value={userInfo.Password}
-          placeholder="Password"
-          name="Password"
-          type="password"
-        />
-        {errors.Password && <span>Password cannot be empty</span>}
+        <div className="flex items-center space-x-5 border-[1px]">
+          <input
+            onChange={handleChange}
+            value={userInfo.Password}
+            placeholder="Password"
+            name="Password"
+            type="password"
+          />
+          <img
+            className={`w-6 h-6 ${errors.Password ? "block" : "hidden"}`}
+            src="/images/icon-error.svg"
+            alt="error image"
+          />
+        </div>
+        {errors.Password && (
+          <span className="text-red-600">Password cannot be empty</span>
+        )}
         <button>Submit</button>
       </form>
     </>
