@@ -42,7 +42,7 @@ function App() {
   const handleSubmission = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    let isValid = true; // Local variable to track validation status
+    let isValid = true; //  Local variable to track validation status
 
     if (!userInfo.FirstName) {
       setErrors((prev) => ({ ...prev, FirstName: "Input can not be empty" }));
