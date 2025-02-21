@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-
 import "./index.css";
 import "./App.css";
 
